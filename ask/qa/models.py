@@ -12,6 +12,10 @@ class Question(models.Model):
 
 	author = models.OneToOneField(QuestionAuthor)
 	likes = models.ManyToManyField(User, null=True, on_delete=models.SET_NULL, related_name="question_like_user")
+	objects = QuestionManager()
+
+class QuestionManager(models.Manager):
+	
 
 #ответ
 class Answer(models.Model):
