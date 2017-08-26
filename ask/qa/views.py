@@ -20,10 +20,18 @@ def question(request, question_number):
 					'since': since
 				})
 		
-
+@require_GET
 def popular(request):
-	pass
+	questions = Question.objects.popular()
+	paginator, page = paginate(request, questions, 'popular/?page=')
+	return render(request, 'qa/popular.html',
+				{
+					'questions': page.object_list,
+					'paginator': paginator,
+					'page': page
+				})
 
+@require_GET
 def home(request):
 	questions = Question.objects.new()
 	paginator, page = paginate(request, questions, '?page=')

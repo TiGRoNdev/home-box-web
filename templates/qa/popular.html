@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-fluid">
+      <!-- Example row of columns -->
+      <div class="row">
+			{% for question in page.object_list %}
+				<div class="col-md-4">
+			        <h2>{{ question.title }}</h2>
+					<p>{{ question.text }} </p>
+					<p><a class="btn btn-secondary" href="/question/{{ question.id }}/" role="button">View details &raquo;</a></p>
+				</div>
+			{% endfor %}
+	  </div>
+	  
+	  <nav><ul class="pagination">
+			{% for p in paginator.page_range %}
+				{% if p.number == page.number %}
+					<li class="active">
+				{% else %}
+					<li>
+				{% endif %}
+					<a href="{{ paginator.baseurl }}{{ p.number }}">{{ p.number }}</a>
+					</li>
+			{% endfor %}
+	  </ul></nav>
+    </div> <!-- /container -->
+{% endblock %}
