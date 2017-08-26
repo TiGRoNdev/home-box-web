@@ -1,21 +1,31 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
 from django.http import HttpResponse
-from qa.models import QuestionManager
+from qa.models import *
 from qa.paginator import paginate
 
 
 def test(request, *args, **kwargs):
 	return HttpResponse('OK')
 
+@require_GET
 def question(request, question_number):
-	pass
+	question = get_object_or_404(Question, id=question_number)
+	since = request.GET.get('since')
+	answers, since = Answer.objects.main(since, question)
+	return render(request, 'qa/question.html',
+				{
+					'answers': answers,
+					'question': question,
+					'since': since
+				})
+		
 
 def popular(request):
 	pass
 
 def home(request):
-	questions = QuestionManager.new()
+	questions = Question.objects.new()
 	paginator, page = paginate(request, questions, '?page=')
 	return render(request, 'qa/home.html',
 				{
