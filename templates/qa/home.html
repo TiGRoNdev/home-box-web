@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="container">
+    <div class="container-fluid">
       <!-- Example row of columns -->
       <div class="row">
 			{% for question in page.object_list %}
@@ -23,9 +23,5 @@
 					</li>
 			{% endfor %}
 	  </ul></nav>
-
-	  <footer>
-        <p>&copy; TiGRoNdev 2017</p>
-      </footer>
     </div> <!-- /container -->
 {% endblock %}

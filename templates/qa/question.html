@@ -8,10 +8,10 @@
 				<h1>{{ question.title }}</h1>
 			</div>
 			<div class="col-md-2">
-				<p>{{ question.added_at }}</p>
+				<p>Date: {{ question.added_at }}</p>
 			</div>
 			<div class="col-md-2">
-				<p>{{ question.rating }}</p>
+				<p>Rating: {{ question.rating }}</p>
 			</div>
 			<p>{{ question.text }}</p>
 		</div>
@@ -24,7 +24,7 @@
 					<h1>{{ answer.text }}</h1>
 				</div>
 				<div class="col-md-4">
-					<p>{{ answer.added_at }}</p>
+					<p>Date: {{ answer.added_at }}</p>
 				</div>
 				<div class="col-md-12">
 					<p>{{ answer.author }}</p>
@@ -36,9 +36,5 @@
 				<h1><a href="/question/{{ question.id }}/?since={{ since }}">Next</a></h1>
 			</div>
 		</div>
-
-		<footer>
-        		<p>&copy; TiGRoNdev 2017</p>
-		</footer>
 	</div>
 {% endblock %}

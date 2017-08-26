@@ -1,4 +1,4 @@
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 
 def paginate(request, qs, baseurl):
@@ -12,5 +12,8 @@ def paginate(request, qs, baseurl):
 		raise Http404
 	paginator = Paginator(qs, limit)
 	paginator.baseurl = baseurl
-	page = paginator.page(page)
+	try:	
+		page = paginator.page(page)
+	except (EmptyPage, PageNotAnInteger):
+		raise Http404
 	return paginator, page
