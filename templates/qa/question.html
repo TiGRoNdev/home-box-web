@@ -5,15 +5,19 @@
 		<!-- Main Question on page -->
 		<div class="row">
 			<div class="col-md-8">
-				<h1>{{ question.title }}</h1>
+				<h1><b>{{ question.title }}</b></h1>
 			</div>
 			<div class="col-md-2">
-				<p>Date: {{ question.added_at }}</p>
+				<h6>Date: {{ question.added_at }}</h6>
 			</div>
 			<div class="col-md-2">
-				<p>Rating: {{ question.rating }}</p>
+				<h6>Rating: {{ question.rating }}</h6>
 			</div>
-			<p>{{ question.text }}</p>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h5><b>{{ question.text }}</b></h5>
+			</div>
 		</div>
 	</div>
 	<div class="container-fluid">
@@ -21,10 +25,10 @@
 		{% for answer in answers %}
 			<div class="row">
 				<div class="col-md-8">
-					<h1>{{ answer.text }}</h1>
+					<h3>{{ answer.text }}</h3>
 				</div>
 				<div class="col-md-4">
-					<p>Date: {{ answer.added_at }}</p>
+					<h6>Date: {{ answer.added_at }}</h6>
 				</div>
 				<div class="col-md-12">
 					<p>{{ answer.author }}</p>
