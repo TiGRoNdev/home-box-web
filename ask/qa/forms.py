@@ -10,10 +10,10 @@ class AskForm(forms.Form):
 		text = self.cleaned_data['text']
 		if len(text) > 1000:
 			raise forms.ValidationError('Symbols in text > 1000')
-		return "Successfully completed"
+		return self.cleaned_data
 	
 	def save(self):
-		question = Question(**self.cleaned_data)
+		question = Question.objects.create_question(self.cleaned_data)
 		question.save()
 		return question
 

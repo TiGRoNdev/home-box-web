@@ -7,10 +7,23 @@
 				<div class="col-md-4">
 			        <h2>{{ question.title }}</h2>
 					<p>{{ question.text }} </p>
-					<p><a class="btn btn-secondary" href="/question/{{ question.id }}/" role="button">View details &raquo;</a></p>
+					<p><a class="btn btn-primary" href="/question/{{ question.id }}/" role="button">View details &raquo;</a></p>
 				</div>
 			{% endfor %}
       </div>
+
+<!--	<nav>
+	<ul class="pagination">
+		{% for p in page.paginator.page_range %}
+			{% if p.number == page.number %}
+			<li class="active">
+			{% else %}
+			<li>
+			{% endif %}
+			<a href="/?page={{ p.number }}">{{ p.number }}</a>
+		{% endfor %}
+	</ul>
+	</nav> -->
 	 
 	<div class="pagination">
     		<span class="step-links">
@@ -26,7 +39,7 @@
             		<a href="?page={{ page.next_page_number }}">Next</a>
         		{% endif %}
     		</span>
-	</div>
+	</div> 
 
     </div> <!-- /container -->
 {% endblock %}

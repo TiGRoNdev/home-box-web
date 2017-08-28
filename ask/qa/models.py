@@ -1,5 +1,7 @@
 from django.db import models
+from datetime import datetime
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 # Create your models here.
 
@@ -9,6 +11,13 @@ class QuestionManager(models.Manager):
 	
 	def popular(self):
 		return self.order_by("-rating")
+
+	def create_question(self, d):
+		question = self.create(title=d["title"],
+					text=d["text"],
+					added_at=datetime.now().date()
+					)
+		return question
 
 
 class AnswerManager(models.Manager):
@@ -38,6 +47,9 @@ class Question(models.Model):
 	author = models.ForeignKey(User, null=False, default=1)
 	likes = models.ManyToManyField(User, related_name="question_like_user")
 	objects = QuestionManager()
+
+	def get_absolute_url(self):
+		return reverse('question', args=[str(self.id)])
 
 
 class Answer(models.Model):

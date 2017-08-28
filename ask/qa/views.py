@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
 from django.http import HttpResponse, HttpResponseRedirect
+from datetime import date
 from qa.models import *
 from qa.paginator import paginate
 from qa.forms import AskForm, AnswerForm
@@ -14,7 +15,7 @@ def ask(request):
 		form = AskForm(request.POST)
 		if form.is_valid():
 			ask = form.save()
-			url = ask.get_url()
+			url = ask.get_absolute_url()
 			return HttpResponseRedirect(url)
 	else:
 		form = AskForm()
