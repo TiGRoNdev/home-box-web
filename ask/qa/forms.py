@@ -19,11 +19,11 @@ class AskForm(forms.Form):
 
 
 class AnswerForm(forms.Form):
-        def all_choices():
-                def get_tuple(obj):
-                        return (str(obj), str(obj))
-                qs = Question.objects.all()
-                return tuple(map(get_tuple, qs))
+	def all_choices():
+		def get_tuple(obj):
+			return (str(obj), str(obj))
+		qs = Question.objects.all()
+		return tuple(map(get_tuple, qs))
 
 	question = forms.ChoiceField(choices=all_choices(), initial='Choose the question')
 	text = forms.CharField(max_length=600, widget=forms.Textarea, initial='Your answer')
