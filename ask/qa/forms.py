@@ -3,7 +3,7 @@ from qa.models import Question, Answer
 
 
 class AskForm(forms.Form):
-	title = forms.CharField(max_length=100)
+	title = forms.CharField(max_length=100, initial='Your Question')
 	text = forms.CharField(widget=forms.Textarea)
 
 	def clean(self):
@@ -19,8 +19,14 @@ class AskForm(forms.Form):
 
 
 class AnswerForm(forms.Form):
-	question = forms.CharField(max_length=100)
-	text = forms.CharField(max_length=600, widget=forms.Textarea)
+        def all_choices():
+                def get_tuple(obj):
+                        return (str(obj), str(obj))
+                qs = Question.objects.all()
+                return tuple(map(get_tuple, qs))
+
+	question = forms.ChoiceField(choices=all_choices(), initial='Choose the question')
+	text = forms.CharField(max_length=600, widget=forms.Textarea, initial='Your answer')
 	
 	def clean_question(self):
 		question = self.cleaned_data['question']
