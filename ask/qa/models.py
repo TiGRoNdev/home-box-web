@@ -15,8 +15,7 @@ class QuestionManager(models.Manager):
 	def create_question(self, d):
 		question = self.create(title=d["title"],
 					text=d["text"],
-					added_at=datetime.now().date()
-					)
+					added_at=datetime.now().date())
 		return question
 
 
@@ -36,6 +35,12 @@ class AnswerManager(models.Manager):
 		elif len(res) == 1:
 			since = res[0].id
 		return res, since
+
+	def create_answer(self, d, question=None):
+		answer = self.create(text=d["text"],
+					added_at=datetime.now().date(),
+					question=question)
+		return answer
 
 
 class Question(models.Model):
@@ -60,4 +65,5 @@ class Answer(models.Model):
 	author = models.ForeignKey(User, null=False, default=1)
 	objects = AnswerManager()
 
-	
+	def get_absolute_url(self):
+		return reverse('question', args=[str(self.question.id)])	

@@ -22,16 +22,23 @@ def ask(request):
 	return render(request, 'qa/ask.html', {'form': form})		
 	
 
-@require_GET
 def question(request, question_number):
 	question = get_object_or_404(Question, id=question_number)
 	since = request.GET.get('since')
 	answers, since = Answer.objects.main(since, question)
+	if request.method == "POST":
+		form = AnswerForm(request.POST)
+		if form.is_valid():
+			answer = form.save(question=question)
+			return HttpResponseRedirect(question.get_absolute_url)
+	else:
+		form = AnswerForm()
 	return render(request, 'qa/question.html',
 				{
 					'answers': answers,
 					'question': question,
-					'since': since
+					'since': since,
+					'form': form
 				})
 		
 @require_GET
