@@ -29,8 +29,9 @@ def question(request, question_number):
 	if request.method == "POST":
 		form = AnswerForm(request.POST)
 		if form.is_valid():
-			answer = form.save(question=question)
-			return HttpResponseRedirect(question.get_absolute_url)
+			answer = form.save()
+			question = answer.question
+			return HttpResponseRedirect("/question/{}/".format(question.id))
 	else:
 		form = AnswerForm()
 	return render(request, 'qa/question.html',

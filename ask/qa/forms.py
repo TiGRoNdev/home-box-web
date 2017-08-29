@@ -28,9 +28,9 @@ class AnswerForm(forms.Form):
 			test_question = Question.objects.get(title=str(question))
 		except Question.DoesNotExist:
 			raise forms.ValidationError('Question with this title does not exist')
-		return self.cleaned_data
+		return test_question
 	
-	def save(self, question=None):
-		answer = Answer.objects.create_answer(self.cleaned_data, question=question)
+	def save(self):
+		answer = Answer.objects.create_answer(self.cleaned_data)
 		answer.save()
 		return answer

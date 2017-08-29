@@ -36,10 +36,10 @@ class AnswerManager(models.Manager):
 			since = res[0].id
 		return res, since
 
-	def create_answer(self, d, question=None):
+	def create_answer(self, d):
 		answer = self.create(text=d["text"],
 					added_at=datetime.now().date(),
-					question=question)
+					question=d['question'])
 		return answer
 
 
@@ -54,7 +54,7 @@ class Question(models.Model):
 	objects = QuestionManager()
 
 	def get_absolute_url(self):
-		return reverse('question', args=[str(self.id)])
+		return "/question/{}/".format(self.id)
 
 
 class Answer(models.Model):
