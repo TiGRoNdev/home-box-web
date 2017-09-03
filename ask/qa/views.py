@@ -1,25 +1,55 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, QueryDict
+from django.contrib.auth import login as log_in
+from django.contrib.auth import authenticate, logout
 from datetime import date
 from qa.models import *
 from qa.paginator import paginate
-from qa.forms import AskForm, AnswerForm
+from qa.forms import AskForm, AnswerForm, LoginForm, SignUpForm
 
 
-def test(request, *args, **kwargs):
-	return HttpResponse('OK')
+@require_GET
+def signout(request):
+	if request.user is not None:
+		logout(request)
+	return HttpResponseRedirect('/')
+
+
+def login(request):
+	if request.method == "POST":
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			log_in(request, user)
+			return HttpResponseRedirect("/")
+	else:
+		form = LoginForm()
+	return render(request, 'qa/login.html', {'form': form, 'username': request.user.username})
+
+
+def signup(request):
+	if request.method == "POST":
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			log_in(request, user)
+			return HttpResponseRedirect("/")
+	else:
+		form = SignUpForm()
+	return render(request, 'qa/signup.html', {'form': form, 'username': request.user.username})
+
 
 def ask(request):
 	if request.method == "POST":
 		form = AskForm(request.POST)
 		if form.is_valid():
-			ask = form.save()
+			ask = form.save(user=request.user)
 			url = ask.get_absolute_url()
 			return HttpResponseRedirect(url)
 	else:
 		form = AskForm()
-	return render(request, 'qa/ask.html', {'form': form})		
+	return render(request, 'qa/ask.html', {'form': form, 'username': request.user.username})		
 	
 
 def question(request, question_number):
@@ -29,7 +59,7 @@ def question(request, question_number):
 	if request.method == "POST":
 		form = AnswerForm(request.POST)
 		if form.is_valid():
-			answer = form.save()
+			answer = form.save(user=request.user)
 			question = answer.question
 			return HttpResponseRedirect("/question/{}/".format(question.id))
 	else:
@@ -39,7 +69,8 @@ def question(request, question_number):
 					'answers': answers,
 					'question': question,
 					'since': since,
-					'form': form
+					'form': form,
+					'username': request.user.username
 				})
 		
 @require_GET
@@ -49,7 +80,8 @@ def popular(request):
 	return render(request, 'qa/popular.html',
 				{
 					'questions': page.object_list,
-					'page': page
+					'page': page,
+					'username': request.user.username
 				})
 
 @require_GET
@@ -59,7 +91,8 @@ def home(request):
 	return render(request, 'qa/home.html',
 				{
 					'questions': page.object_list,
-					'page': page
+					'page': page,
+					'username': request.user.username
 				})
 
 # Create your views here.

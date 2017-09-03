@@ -20,16 +20,26 @@
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand"><b>Ask VITALYA</b></a>
-            </div>
-	    <div>
-		<ul class="nav navbar-nav">
-			<li><a href="/">Home</a></li>
-			<li><a href="/popular/">Popular</a></li>
-			<li><a href="/ask/">Ask</a></li>
-		</ul>
+	    <div class="col-md-8">
+            	<div class="navbar-header">
+                	<a class="navbar-brand"><b>Ask VITALYA</b></a>
+            	</div>
+	    	<div>
+			<ul class="nav navbar-nav">
+				<li><a href="/">Home</a></li>
+				<li><a href="/popular/">Popular</a></li>
+				<li><a href="/ask/">Ask</a></li>
+			</ul>
+	    	</div>
 	    </div>
+	    <ul class="nav nav-pills pull-right">
+		{% if username %}
+			<li><h5>Hey, <b>{{ username }}</b>, Vitalya say "Hello"            </h5></li>
+			<li><a class="btn btn-warning" href="/signout/">SignOUT</a></li>
+		{% else %}
+			<li><a class="btn btn-success" href="/login/">SignIN</a></li>
+		{% endif %}
+	    </ul>
 	</div>
     </nav>
 
