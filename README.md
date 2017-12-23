@@ -1,1 +1,1 @@
-Обычный README файл, ничего примечательного
+Start this project with running init.sh file on Linux console
